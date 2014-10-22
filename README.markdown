@@ -1,3 +1,6 @@
+[![PyPI version](https://badge.fury.io/py/ckanapi-exporter.svg)](http://badge.fury.io/py/ckanapi-exporter)
+
+
 ckanapi-exporter
 ================
 
