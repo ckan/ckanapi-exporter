@@ -127,3 +127,46 @@ Returns a UTF8-encoded string.
 The second argument can be either the filename of the columns.json file as a
 string, or a list of dictionaries (equivalent to the contents of columns.json
 file after loading the JSON).
+
+
+Dataset Preprocessing
+---------------------
+
+ckanapi-exporter does some preprocessing of the datasets from CKAN before
+passing them to losser. Normally CKAN's dataset extras are formatted as a list
+of dictionaries:
+
+    {
+      ...
+      "extras": [
+        {
+          "key": "extra 1",
+          "value": "value 1"
+        },
+        {
+          "key": "extra 2",
+          "value": "value 2"
+        },
+        ...
+      ],
+      ...
+    }
+
+This is not very convenient for losser, which can only match patterns against
+an object's keys not their values. So ckanapi-exporter transforms this into a
+single dictionary:
+
+    {
+      ...
+      "extras": {
+        "extra 1": "value 1",
+        "extra 2": "value 2",
+        ...
+      },
+      ...
+    }
+
+This enables you to retrieve extras by name with pattern paths like this in
+your `columns.json`: `["^extras$", "^extra 1$"]`.
+
+Improvements to losser could make this preprocessing unnecessary.
