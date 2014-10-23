@@ -113,6 +113,9 @@ and outputs them as a quoted comma-separated list, deduplicated. For example:
 See the [losser docs](https://github.com/ckan/losser) for further documentation
 of the `columns.json` file format.
 
+For a working example `columns.json` file that you can use against demo.ckan.org,
+see [example_columns.json](example_columns.json).
+
 
 ### Using as a Python Library
 
