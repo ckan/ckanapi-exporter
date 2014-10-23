@@ -73,7 +73,7 @@ from the datasets. For example:
           "pattern_path": ["^resources$", "^format$"],
           "case_sensitive": true,
           "deduplicate": true
-      },
+      }
     }
 
 This specifies five column headings for the output CSV:
@@ -83,6 +83,9 @@ This specifies five column headings for the output CSV:
 3. Contributor
 4. Description
 5. Format
+
+The columns in the CSV file will be in the order that they appear in the
+`columns.json` file.
 
 The values for the Data Owner column are found by matching the regular
 expression `"^author$"` against the top-level keys of each of the datasets.
@@ -98,10 +101,10 @@ extras whose names match the regular expression `"^Contributor.*"`
 case-insensitively. This will find extras named "contributor", "Contributor",
 "Contributor 1", "Contributor 2", etc. When there are multiple matches they'll
 be written as a quoted comma-separated list in the CSV file, for example:
-`"Thom Yorke,Nigel Godrich,Jonny Greenwood"`'.
+`"Thom Yorke,Nigel Godrich,Jonny Greenwood"`.
 
-The Description column finds the "notes" field of each and truncates the value
-to the first 255 characters.
+The Description column finds the "notes" field of each dataset and truncates
+the value to the first 255 characters.
 
 The Format column finds the "format" field of each of the dataset's resources
 and outputs them as a quoted comma-separated list, deduplicated. For example:
