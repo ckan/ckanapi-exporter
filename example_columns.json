@@ -1,0 +1,18 @@
+{
+  "Data Owner": {
+      "pattern_path": "^author$",
+      "unique": true,
+      "case_sensitive": true
+  },
+  "Description": {
+      "pattern_path": "^notes$",
+      "unique": true,
+      "case_sensitive": true,
+      "max_length": 255
+  },
+  "Format": {
+      "pattern_path": ["^resources$", "^format$"],
+      "case_sensitive": true,
+      "deduplicate": true
+  }
+}
