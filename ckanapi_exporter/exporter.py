@@ -9,7 +9,11 @@ VERSION = '0.0.1'
 
 
 # TODO: Make this more generic, accept search params as param.
-def get_datasets_from_ckan(api):
+def get_datasets_from_ckan(url, apikey):
+    user_agent = ('ckanapi-exporter/{version} '
+                  '(+https://github.com/ckan/ckanapi-exporter)').format(
+                          version=VERSION)
+    api = ckanapi.RemoteCKAN(url, apikey=apikey, user_agent=user_agent)
     response = api.action.package_search(rows=1000000)
     return response["results"]
 
@@ -26,11 +30,7 @@ def extras_to_dicts(datasets):
 
 
 def export(url, columns, apikey=None):
-    user_agent = ('ckanapi-exporter/{version} '
-                  '(+https://github.com/ckan/ckanapi-exporter)').format(
-                          version=VERSION)
-    api = ckanapi.RemoteCKAN(url, apikey=apikey, user_agent=user_agent)
-    datasets = get_datasets_from_ckan(api)
+    datasets = get_datasets_from_ckan(url, apikey)
     extras_to_dicts(datasets)
     csv_string = losser.table(datasets, columns, csv=True)
     return csv_string

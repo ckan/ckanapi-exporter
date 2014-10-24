@@ -114,7 +114,7 @@ See the [losser docs](https://github.com/ckan/losser) for further documentation
 of the `columns.json` file format.
 
 For a working example `columns.json` file that you can use against demo.ckan.org,
-see [example_columns.json](example_columns.json).
+see [ckanapi_exporter/test_columns.json](test_columns.json).
 
 
 ### Using as a Python Library

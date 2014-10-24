@@ -10,9 +10,12 @@
       "case_sensitive": true,
       "max_length": 255
   },
-  "Format": {
+  "Formats": {
       "pattern_path": ["^resources$", "^format$"],
       "case_sensitive": true,
       "deduplicate": true
+  },
+  "Update Frequency": {
+      "pattern_path": ["^extras$", "^update.*"]
   }
 }
