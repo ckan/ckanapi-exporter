@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ckan/ckanapi-exporter.svg)](https://travis-ci.org/ckan/ckanapi-exporter)
+[![Coverage Status](https://img.shields.io/coveralls/ckan/ckanapi-exporter.svg)](https://coveralls.io/r/ckan/ckanapi-exporter)
 [![PyPI version](https://badge.fury.io/py/ckanapi-exporter.svg)](http://badge.fury.io/py/ckanapi-exporter)
 
 
