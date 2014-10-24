@@ -16,7 +16,7 @@ hooking it up to the CKAN API.
 Requirements
 ------------
 
-Python 2.7, or 2.6 with the argparse library.
+Python 2.7, does not work with 2.6!
 
 
 Installation
