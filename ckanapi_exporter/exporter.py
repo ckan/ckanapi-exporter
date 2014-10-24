@@ -38,9 +38,6 @@ def export(url, columns, apikey=None):
 
 def main(args=None):
 
-    if args is None:
-        args = sys.argv[1:]
-
     parser = argparse.ArgumentParser(
         description="Export datasets from a CKAN site to JSON or CSV.",
     )
