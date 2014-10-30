@@ -1,7 +1,10 @@
 [![Build Status](https://travis-ci.org/ckan/ckanapi-exporter.svg)](https://travis-ci.org/ckan/ckanapi-exporter)
 [![Coverage Status](https://img.shields.io/coveralls/ckan/ckanapi-exporter.svg)](https://coveralls.io/r/ckan/ckanapi-exporter)
-[![PyPI version](https://badge.fury.io/py/ckanapi-exporter.svg)](http://badge.fury.io/py/ckanapi-exporter)
-
+[![Latest Version](https://pypip.in/version/ckanapi-exporter/badge.svg)](https://pypi.python.org/pypi/ckanapi-exporter/)
+[![Downloads](https://pypip.in/download/ckanapi-exporter/badge.svg)](https://pypi.python.org/pypi/ckanapi-exporter/)
+[![Supported Python versions](https://pypip.in/py_versions/ckanapi-exporter/badge.svg)](https://pypi.python.org/pypi/ckanapi-exporter/)
+[![Development Status](https://pypip.in/status/ckanapi-exporter/badge.svg)](https://pypi.python.org/pypi/ckanapi-exporter/)
+[![License](https://pypip.in/license/ckanapi-exporter/badge.svg)](https://pypi.python.org/pypi/ckanapi-exporter/)
 
 ckanapi-exporter
 ================
