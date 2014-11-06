@@ -33,7 +33,10 @@ Usage
 For example, to create a one-column CSV file containing the titles of all the
 datasets from demo.ckan.org:
 
-    ckanapi-exporter --url 'http://demo.ckan.org' --column "Title" --pattern '^title$' > output.csv
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' > output.csv
+```
 
 This searches for the field matching the regular expression '^title$' in each
 dataset (the `--pattern` argument) and puts the values into a column called
