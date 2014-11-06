@@ -164,7 +164,9 @@ You can also specify your columns in a `columns.json` file like this:
 Then tell ckanapi-exporter to read the column options from this file instead of
 giving them on the command line:
 
-    ckanapi-exporter --url 'http://demo.ckan.org' --columns columns.json > output.csv
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' --columns columns.json > output.csv
+```
 
 For a working example `columns.json` file that you can use against demo.ckan.org,
 see [ckanapi_exporter/test_columns.json](test_columns.json).
