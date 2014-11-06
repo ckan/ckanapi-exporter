@@ -169,7 +169,7 @@ ckanapi-exporter --url 'http://demo.ckan.org' --columns columns.json > output.cs
 ```
 
 For a working example `columns.json` file that you can use against demo.ckan.org,
-see [ckanapi_exporter/test_columns.json](test_columns.json).
+see [test_columns.json](ckanapi_exporter/test_columns.json).
 
 ckanapi-exporter is a thin wrapper around
 [losser](https://github.com/ckan/losser), hooking it up to the CKAN API.
