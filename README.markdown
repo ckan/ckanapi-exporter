@@ -38,7 +38,7 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
     --column "Title" --pattern '^title$' > output.csv
 ```
 
-This searches for the field matching the regular expression '^title$' in each
+This searches for the field matching the regular expression `'^title$'` in each
 dataset (the `--pattern` argument) and puts the values into a column called
 "Title" in the CSV file (the `--column` argument). It'll create an `output.csv`
 file something like this:
@@ -89,7 +89,7 @@ This means find the "resources" field of each dataset and then find the
     <td>CSV, CSV, CSV, CSV</td>
   </tr>
   <tr>
-    <td>UK at Burglaries</td>
+    <td>UK Cat Burglaries</td>
     <td>JPEG, CSV, CSV</td>
   </tr>
   <tr>
@@ -181,7 +181,7 @@ Exporting Dataset Extras
 ------------------------
 
 This column in a `columns.json` file will find a dataset extra whose name (key)
-matches the regular expression `"^Delivery Unit$" in each dataset, and will
+matches the regular expression `"^Delivery Unit$"` in each dataset, and will
 crash if any dataset has more than one matching extra:
 
 ```json
