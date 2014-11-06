@@ -65,7 +65,11 @@ To add a second column containing quoted, comma-separated lists of each of the
 datasets' resource formats just add another pair of `--column` and
 `--pattern` options:
 
-    ckanapi-exporter --url 'http://demo.ckan.org' --column "Title" --pattern '^title$' --column Formats --pattern '^resources$' '^format$' > output.csv
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' \
+    --column Formats --pattern '^resources$' '^format$' > output.csv
+```
 
 This time the pattern has two arguments: `--pattern '^resources$' '^format$'`.
 This means find the "resources" field of each dataset and then find the
@@ -97,7 +101,12 @@ This means find the "resources" field of each dataset and then find the
 CSV is repeated a lot because lots of the datasets have multiple CSV resources.
 You can add the `--deduplicate` option to the column to remove the duplication:
 
-    ckanapi-exporter --url 'http://demo.ckan.org' --column "Title" --pattern '^title$' --column Formats --pattern '^resources$' '^format$' --deduplicate > output.csv
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' \
+    --column Formats --pattern '^resources$' '^format$' --deduplicate \
+    > output.csv
+```
 
 <table>
   <tr>
@@ -217,7 +226,7 @@ Development
 To install for development, create and activate a Python virtual environment
 then do:
 
-```sh
+```bash
 git clone https://github.com/ckan/ckanapi-exporter.git
 cd ckanapi-exporter
 python setup.py develop
