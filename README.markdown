@@ -131,6 +131,44 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
   </tr>
 </table>
 
+Add a third column:
+
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' \
+    --column Formats --pattern '^resources$' '^format$' --deduplicate \
+    --column "License" --pattern '^license_title$' \
+    > output.csv
+```
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Formats</th>
+    <th>License</th>
+  </tr>
+  <tr>
+    <td>Senior Salaries Information</td>
+    <td>XLSX, CSV</td>
+    <td>Creative Commons Attribution</td>
+  </tr>
+  <tr>
+    <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
+    <td>CSV</td>
+    <td>Creative Commons CCZero</td>
+  </tr>
+  <tr>
+    <td>UK at Burglaries</td>
+    <td>JPEG, CSV</td>
+    <td>UK Open Government Licence (OGL)</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+</table>
+
 You can also specify your columns in a `columns.json` file like this:
 
 ```json
