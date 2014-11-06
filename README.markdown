@@ -121,31 +121,33 @@ You can add the `--deduplicate` option to the column to remove the duplication:
 
 You can also specify your columns in a `columns.json` file like this:
 
-    {
-      "Data Owner": {
-          "pattern": "^author$",
-          "unique": true,
-          "case_sensitive": true
-      },
-      "Delivery Unit": {
-          "pattern": ["^extras$", "^Delivery Unit$"],
-          "unique": true
-      },
-      "Contributor": {
-          "pattern": ["^extras$", "^Contributor.*"]
-      },
-      "Description": {
-          "pattern": "^notes$",
-          "unique": true,
-          "case_sensitive": true,
-          "max_length": 255
-      },
-      "Format": {
-          "pattern": ["^resources$", "^format$"],
-          "case_sensitive": true,
-          "deduplicate": true
-      }
-    }
+```json
+{
+  "Data Owner": {
+      "pattern": "^author$",
+      "unique": true,
+      "case_sensitive": true
+  },
+  "Delivery Unit": {
+      "pattern": ["^extras$", "^Delivery Unit$"],
+      "unique": true
+  },
+  "Contributor": {
+      "pattern": ["^extras$", "^Contributor.*"]
+  },
+  "Description": {
+      "pattern": "^notes$",
+      "unique": true,
+      "case_sensitive": true,
+      "max_length": 255
+  },
+  "Format": {
+      "pattern": ["^resources$", "^format$"],
+      "case_sensitive": true,
+      "deduplicate": true
+  }
+}
+```
 
 Then tell ckanapi-exporter to read the column options from this file instead of
 giving them on the command line:
