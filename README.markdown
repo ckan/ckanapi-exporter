@@ -170,10 +170,12 @@ This column in a `columns.json` file will find a dataset extra whose name (key)
 matches the regular expression `"^Delivery Unit$" in each dataset, and will
 crash if any dataset has more than one matching extra:
 
-      "Delivery Unit": {
-          "pattern_path": ["^extras$", "^Delivery Unit$"],
-          "unique": true
-      },
+```json
+"Delivery Unit": {
+    "pattern_path": ["^extras$", "^Delivery Unit$"],
+    "unique": true
+},
+```
 
 This column will find dataset extras whose names match the regular expression
 `"^Contributor.*"` case-insensitively. This will find extras named
@@ -181,9 +183,11 @@ This column will find dataset extras whose names match the regular expression
 are multiple matches they'll be written as a quoted comma-separated list in the
 CSV file, for example: `"Thom Yorke,Nigel Godrich,Jonny Greenwood"`.
 
-      "Contributor": {
-          "pattern_path": ["^extras$", "^Contributor.*"]
-      },
+```json
+"Contributor": {
+    "pattern_path": ["^extras$", "^Contributor.*"]
+},
+```
 
 
 Using as a Python Library
@@ -192,8 +196,10 @@ Using as a Python Library
 You can also import ckanapi-exporter in Python and use it from your CKAN API
 client or plugin:
 
-    import ckanapi_exporter.exporter as exporter
-    csv_string = exporter.export('http://demo.ckan.org', 'columns.json')
+```python
+import ckanapi_exporter.exporter as exporter
+csv_string = exporter.export('http://demo.ckan.org', 'columns.json')
+```
 
 Returns a UTF8-encoded string.
 
@@ -208,10 +214,12 @@ Development
 To install for development, create and activate a Python virtual environment
 then do:
 
-    git clone https://github.com/ckan/ckanapi-exporter.git
-    cd ckanapi-exporter
-    python setup.py develop
-    pip install -r dev-requirements.txt
+```sh
+git clone https://github.com/ckan/ckanapi-exporter.git
+cd ckanapi-exporter
+python setup.py develop
+pip install -r dev-requirements.txt
+```
 
 To run the tests do:
 
