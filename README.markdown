@@ -54,7 +54,7 @@ file something like this:
     <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
   </tr>
   <tr>
-    <td>UK at Burglaries</td>
+    <td>UK Cat Burglaries</td>
   </tr>
   <tr>
     <td>...</td>
