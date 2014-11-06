@@ -2,7 +2,8 @@ import sys
 import argparse
 
 import ckanapi
-import losser.losser as losser
+import losser.losser
+import losser.cli
 
 
 VERSION = '0.0.1'
@@ -32,14 +33,16 @@ def extras_to_dicts(datasets):
 def export(url, columns, apikey=None):
     datasets = get_datasets_from_ckan(url, apikey)
     extras_to_dicts(datasets)
-    csv_string = losser.table(datasets, columns, csv=True)
+    csv_string = losser.losser.table(datasets, columns, csv=True)
     return csv_string
 
 
 def main(args=None):
-
+    parent_parser = losser.cli.make_parser(
+        add_help=False, exclude_args=["-i"])
     parser = argparse.ArgumentParser(
         description="Export datasets from a CKAN site to JSON or CSV.",
+        parents=[parent_parser],
     )
     parser.add_argument(
         "--url",
@@ -48,21 +51,20 @@ def main(args=None):
         required=True,
     )
     parser.add_argument(
-        "--columns",
-        help="the path to the JSON file specifying the columns to output, "
-             "for example: columns.json",
-        required=True,
-    )
-    parser.add_argument(
         "--apikey",
         help="the API key to use when fetching datasets from the CKAN site, "
              "use this option if you want to export private datasets as well "
              "as public ones",
         )
-    parsed_args = parser.parse_args(args)
-
-    csv_string = export(parsed_args.url, parsed_args.columns,
-                        parsed_args.apikey)
+    try:
+        parsed_args = losser.cli.parse(parser=parser)
+    except losser.cli.CommandLineExit as err:
+        sys.exit(err.code)
+    except losser.cli.CommandLineError as err:
+        if err.message:
+            parser.error(err.message)
+    csv_string = export(
+        parsed_args.url, parsed_args.columns, parsed_args.apikey)
     sys.stdout.write(csv_string)
 
 
