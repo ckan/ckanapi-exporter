@@ -30,10 +30,11 @@ def extras_to_dicts(datasets):
         dataset["extras"] = extras_dict
 
 
-def export(url, columns, apikey=None):
+def export(url, columns, apikey=None, pretty=False):
     datasets = get_datasets_from_ckan(url, apikey)
     extras_to_dicts(datasets)
-    csv_string = losser.losser.table(datasets, columns, csv=True)
+    csv_string = losser.losser.table(datasets, columns, csv=True,
+                                     pretty=pretty)
     return csv_string
 
 
@@ -64,7 +65,8 @@ def main(args=None):
         if err.message:
             parser.error(err.message)
     csv_string = export(
-        parsed_args.url, parsed_args.columns, parsed_args.apikey)
+        parsed_args.url, parsed_args.columns, parsed_args.apikey,
+        pretty=parsed_args.pretty)
     sys.stdout.write(csv_string)
 
 
