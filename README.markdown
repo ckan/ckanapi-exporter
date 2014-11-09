@@ -31,7 +31,7 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
 
 This searches each dataset on demo.ckan.org for fields matching the
 [regular expression](https://docs.python.org/2/howto/regex.html#regex-howto)
-`'^title$'` (the `--pattern` argument) and puts the values into a
+`^title$` (the `--pattern` argument) and puts the values into a
 column called "Title" in the CSV file (the `--column` argument).  It'll create
 an `output.csv` file something like this:
 
@@ -253,8 +253,8 @@ extra so we add the `--unique` argument which will crash if a dataset has more
 than one extra matching the pattern.
 
 By default patterns are matched case-insensitively and whitespace is stripped
-from fields before matching. To match case-sensitively and without stripping
-whitespace add `--case-sensitive --strip false` to the column.
+from field names before matching. To match case-sensitively and without
+stripping whitespace add `--case-sensitive --strip false` to the column.
 
 We can also find multiple extras and combine them into a single column.
 For example, let's say our datasets have a "contributor" extra
@@ -268,7 +268,7 @@ list with a pattern like this:
 
 ### Using a columns.json File
 
-You can specify your columns in a `columns.json` instead of on the command
+You can specify your columns in a `columns.json` file instead of on the command
 line. Here's an example of the format:
 
 ```json
