@@ -13,12 +13,6 @@ An API client (usable as a command-line script or as a Python library) for
 exporting dataset metadata from CKAN sites to Excel-compatible CSV files.
 
 
-Requirements
-------------
-
-Python 2.7, does not work with 2.6!
-
-
 Installation
 ------------
 
@@ -30,18 +24,16 @@ To install run:
 Usage
 -----
 
-For example, to create a one-column CSV file containing the titles of all the
-datasets from demo.ckan.org:
-
 ```bash
 ckanapi-exporter --url 'http://demo.ckan.org' \
     --column "Title" --pattern '^title$' > output.csv
 ```
 
-This searches for the field matching the regular expression `'^title$'` in each
-dataset (the `--pattern` argument) and puts the values into a column called
-"Title" in the CSV file (the `--column` argument). It'll create an `output.csv`
-file something like this:
+This searches each dataset on demo.ckan.org for fields matching the
+[regular expression](https://docs.python.org/2/howto/regex.html#regex-howto)
+`'^title$'` (the `--pattern` argument) and puts the values into a
+column called "Title" in the CSV file (the `--column` argument).  It'll create
+an `output.csv` file something like this:
 
 <table>
   <tr>
@@ -61,38 +53,130 @@ file something like this:
   </tr>
 </table>
 
-To add a second column containing quoted, comma-separated lists of each of the
-datasets' resource formats just add another pair of `--column` and
-`--pattern` options:
+You can add as many columns as you want: just add a `--column` and a
+`--pattern` argument for each column. The title of the column in the CSV file
+can be anything you want - it doesn't have to match the name of the field in
+CKAN. Let's add a second column titled "Rights" that contains the
+`license_title` fields from the datasets:
 
 ```bash
 ckanapi-exporter --url 'http://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' > output.csv
+```
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Rights</th>
+  </tr>
+  <tr>
+    <td>Senior Salaries Information</td>
+    <td>Creative Commons Attribution</td>
+  </tr>
+  <tr>
+    <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
+    <td>Creative Commons CCZero</td>
+  </tr>
+  <tr>
+    <td>UK Cat Burglaries</td>
+    <td>UK Open Government Licence (OGL)</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+</table>
+
+
+### Transformations
+
+You can apply certain transformations to the values from the datasets.
+For example, let's add a third column with the first 50 characters of each
+dataset's description (the `notes` field in the CKAN API):
+
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' \
+    --column "Description" --pattern '^notes$' --max-length 50 > output.csv
+```
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Rights</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Senior Salaries Information</td>
+    <td>Creative Commons Attribution</td>
+    <td>Demo information about senior salaries from 11/04/</td>
+  </tr>
+  <tr>
+    <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
+    <td>Creative Commons CCZero</td>
+    <td>Data on spending over £500 generated for Open Data</td>
+  </tr>
+  <tr>
+    <td>UK Cat Burglaries</td>
+    <td>UK Open Government Licence (OGL)</td>
+    <td>A record of cat burgalries, listing the cat names,</td>
+  </tr>
+  <tr>
+    <td>...</td>
+    <td>...</td>
+    <td>...</td>
+  </tr>
+</table>
+
+
+### Exporting Resource Fields
+
+Let's add a column containing the formats of each datasets' resources:
+
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' \
+    --column "Description" --pattern '^notes$' --max-length 50 \
     --column Formats --pattern '^resources$' '^format$' > output.csv
 ```
 
 This time the pattern has two arguments: `--pattern '^resources$' '^format$'`.
 This means find the "resources" field of each dataset and then find the
-"format" field of each resource. It'll create a CSV file something like this:
+"format" field of each resource. When a dataset has more than one resource
+the formats will be combined into a quoted, comma-separated list in a single
+table cell. It'll create a CSV file something like this:
 
 <table>
   <tr>
     <th>Title</th>
+    <th>Rights</th>
+    <th>Description</th>
     <th>Formats</th>
   </tr>
   <tr>
     <td>Senior Salaries Information</td>
+    <td>Creative Commons Attribution</td>
+    <td>Demo information about senior salaries from 11/04/</td>
     <td>XLSX, CSV</td>
   </tr>
   <tr>
     <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
+    <td>Creative Commons CCZero</td>
+    <td>Data on spending over £500 generated for Open Data</td>
     <td>CSV, CSV, CSV, CSV</td>
   </tr>
   <tr>
     <td>UK Cat Burglaries</td>
+    <td>UK Open Government Licence (OGL)</td>
+    <td>A record of cat burgalries, listing the cat names,</td>
     <td>JPEG, CSV, CSV</td>
   </tr>
   <tr>
+    <td>...</td>
+    <td>...</td>
     <td>...</td>
     <td>...</td>
   </tr>
@@ -104,6 +188,8 @@ You can add the `--deduplicate` option to the column to remove the duplication:
 ```bash
 ckanapi-exporter --url 'http://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' \
+    --column "Description" --pattern '^notes$' --max-length 50 \
     --column Formats --pattern '^resources$' '^format$' --deduplicate \
     > output.csv
 ```
@@ -111,65 +197,79 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
 <table>
   <tr>
     <th>Title</th>
+    <th>Rights</th>
+    <th>Description</th>
     <th>Formats</th>
   </tr>
   <tr>
     <td>Senior Salaries Information</td>
+    <td>Creative Commons Attribution</td>
+    <td>Demo information about senior salaries from 11/04/</td>
     <td>XLSX, CSV</td>
   </tr>
   <tr>
     <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
+    <td>Creative Commons CCZero</td>
+    <td>Data on spending over £500 generated for Open Data</td>
     <td>CSV</td>
   </tr>
   <tr>
-    <td>UK at Burglaries</td>
+    <td>UK Cat Burglaries</td>
+    <td>UK Open Government Licence (OGL)</td>
+    <td>A record of cat burgalries, listing the cat names,</td>
     <td>JPEG, CSV</td>
   </tr>
   <tr>
     <td>...</td>
     <td>...</td>
+    <td>...</td>
+    <td>...</td>
   </tr>
 </table>
 
-Add a third column:
+
+### Exporting Dataset Extras
+
+Let's add a column with the values of the "Next Update" extra from each
+dataset. Dataset publishers have been inconsistent with naming this column,
+it's sometimes "Next Update" and sometimes "next update", "Next update day",
+"Next Update Time" etc. We'll use a regular expression that matches all of
+these possible names and combine them into a single "Next Update" column:
 
 ```bash
 ckanapi-exporter --url 'http://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' \
+    --column "Description" --pattern '^notes$' --max-length 50 \
     --column Formats --pattern '^resources$' '^format$' --deduplicate \
-    --column "License" --pattern '^license_title$' \
+    --column "Next Update" --pattern '^extras$' '^next update.*' --unique \
     > output.csv
 ```
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Formats</th>
-    <th>License</th>
-  </tr>
-  <tr>
-    <td>Senior Salaries Information</td>
-    <td>XLSX, CSV</td>
-    <td>Creative Commons Attribution</td>
-  </tr>
-  <tr>
-    <td>Demo Data for Open Data in 1 Day - Spending Over £500</td>
-    <td>CSV</td>
-    <td>Creative Commons CCZero</td>
-  </tr>
-  <tr>
-    <td>UK at Burglaries</td>
-    <td>JPEG, CSV</td>
-    <td>UK Open Government Licence (OGL)</td>
-  </tr>
-  <tr>
-    <td>...</td>
-    <td>...</td>
-    <td>...</td>
-  </tr>
-</table>
+The two-part pattern `'^extras$' '^next update.*'` means to look in the
+"extras" field of each dataset for extras whose name matches
+`^next update.*`. We're expecting each dataset to have only one matching
+extra so we add the `--unique` argument which will crash if a dataset has more
+than one extra matching the pattern.
 
-You can also specify your columns in a `columns.json` file like this:
+By default patterns are matched case-insensitively and whitespace is stripped
+from fields before matching. To match case-sensitively and without stripping
+whitespace add `--case-sensitive --strip false` to the column.
+
+We can also find multiple extras and combine them into a single column.
+For example, let's say our datasets have a "contributor" extra
+(sometimes spelled "contributor", sometimes "Contributor"). Some datasets have
+multiple extras named "Contributor 1", "Contributor 2" etc. We can find all of
+these contributor extras and combine them into a single quoted, comma-separated
+list with a pattern like this:
+
+    --column Contributors --pattern '^extras$' '^contributor.*'
+
+
+### Using a columns.json File
+
+You can specify your columns in a `columns.json` instead of on the command
+line. Here's an example of the format:
 
 ```json
 {
@@ -213,33 +313,6 @@ ckanapi-exporter is a thin wrapper around
 [losser](https://github.com/ckan/losser), hooking it up to the CKAN API.
 For more documentation of the filtering and transforming options run
 `ckanapi-exporter --help` or read losser's docs.
-
-
-Exporting Dataset Extras
-------------------------
-
-This column in a `columns.json` file will find a dataset extra whose name (key)
-matches the regular expression `"^Delivery Unit$"` in each dataset, and will
-crash if any dataset has more than one matching extra:
-
-```json
-"Delivery Unit": {
-    "pattern_path": ["^extras$", "^Delivery Unit$"],
-    "unique": true
-},
-```
-
-This column will find dataset extras whose names match the regular expression
-`"^Contributor.*"` case-insensitively. This will find extras named
-"contributor", "Contributor", "Contributor 1", "Contributor 2", etc. When there
-are multiple matches they'll be written as a quoted comma-separated list in the
-CSV file, for example: `"Thom Yorke,Nigel Godrich,Jonny Greenwood"`.
-
-```json
-"Contributor": {
-    "pattern_path": ["^extras$", "^Contributor.*"]
-},
-```
 
 
 Using as a Python Library
