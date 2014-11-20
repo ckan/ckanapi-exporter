@@ -6,7 +6,7 @@ import losser.losser
 import losser.cli
 
 
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 
 
 # TODO: Make this more generic, accept search params as param.
