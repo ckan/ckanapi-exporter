@@ -22,7 +22,7 @@ def get_datasets_from_ckan(url, apikey):
 def extras_to_dicts(datasets):
     for dataset in datasets:
         extras_dict = {}
-        for extra in dataset.get("extras"):
+        for extra in dataset.get("extras", []):
             key = extra["key"]
             value = extra["value"]
             assert key not in extras_dict
