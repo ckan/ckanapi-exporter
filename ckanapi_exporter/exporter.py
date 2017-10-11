@@ -8,11 +8,26 @@ import losser.cli
 import math
 
 
-VERSION = '0.0.6'
+VERSION = '0.1.0'
 
-
-# TODO: Make this more generic, accept search params as param.
 def get_datasets_from_ckan(url, apikey, params=None):
+    """Gets the datasets from CKAN API and passed in parameters
+
+    Parameters
+    ----------
+    url: str
+        The url of the CKAN instance.
+    apikey: str, optional
+        The CKAN api key to access private datasets.
+    params: str, optional
+        A literal string representing a dictionary of parameters to pass to CKAN.
+
+    Returns
+    -------
+    array:
+        All the datasets requested in an array.
+
+    """
     user_agent = ('ckanapi-exporter/{version} '
                   '(+https://github.com/ckan/ckanapi-exporter)').format(
                           version=VERSION)
@@ -32,10 +47,10 @@ def get_datasets_from_ckan(url, apikey, params=None):
     for page in range(0, num_pages):
         arguments['start'] = page * 1000
         paged_response = api.call_action('package_search', arguments)
-        #merge these results into one library
+        #merge these results into one dictionary
         datasets.extend(paged_response["results"])
 
-    #return the large libaray to go about it's business
+    #return the large array to go about it's business
     return datasets
 
 
