@@ -4,9 +4,10 @@ import argparse
 import ckanapi
 import losser.losser
 import losser.cli
+import math
 
 
-VERSION = '0.0.5'
+VERSION = '0.0.6'
 
 
 # TODO: Make this more generic, accept search params as param.
@@ -15,8 +16,21 @@ def get_datasets_from_ckan(url, apikey):
                   '(+https://github.com/ckan/ckanapi-exporter)').format(
                           version=VERSION)
     api = ckanapi.RemoteCKAN(url, apikey=apikey, user_agent=user_agent)
-    response = api.action.package_search(rows=1000000)
-    return response["results"]
+
+    #find out if there are more than the hard coded 1000 datasets and how many pages
+    response = api.action.package_search()
+    num_pages = int(math.ceil(response['count']/1000.0))
+
+    #loop over to collect up all datasets from the CKAN instance
+    datasets = []
+    for page in range(0, num_pages):
+        offset = page * 1000
+        paged_response = api.action.package_search(rows=1000,start=offset)
+        #merge these results into one library
+        datasets.extend(paged_response["results"])
+
+    #return the large libaray to go about it's business
+    return datasets
 
 
 def extras_to_dicts(datasets):
