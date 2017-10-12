@@ -88,6 +88,23 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
   </tr>
 </table>
 
+### API Parameters
+The ckanapi-exporter calls the [`package_search`](http://docs.ckan.org/en/latest/api/index.html#ckan.logic.action.get.package_search)
+API action and you can pass in related query parameters by using the `--params`
+argument and passing in a string formated as a dictionary. Each key: value pair
+represents a query passed to the API call.
+
+For example if you wanted to only export datasets between a date range you can
+pass in the `fq` (filtered query) parameter and use `metadata_created` to filter
+the results.
+
+```bash
+ckanapi-exporter --url 'http://demo.ckan.org' \
+    --params "{'fq':'metadata_created:[2017-01-01T00:00:00Z TO 2017-01-31T23:59:99.999Z]'}" \
+    --column "Title" --pattern '^title$' \
+    --column "Rights" --pattern '^license_title$' > output.csv
+```
+
 
 ### Transformations
 
