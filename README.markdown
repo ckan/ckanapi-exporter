@@ -24,7 +24,7 @@ Usage
 -----
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' > output.csv
 ```
 
@@ -59,7 +59,7 @@ CKAN. Let's add a second column titled "Rights" that contains the
 `license_title` fields from the datasets:
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' > output.csv
 ```
@@ -98,7 +98,7 @@ pass in the `fq` (filtered query) parameter and use `metadata_created` to filter
 the results.
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --params "{'fq':'metadata_created:[2017-01-01T00:00:00Z TO 2017-01-31T23:59:99.999Z]'}" \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' > output.csv
@@ -112,7 +112,7 @@ For example, let's add a third column with the first 50 characters of each
 dataset's description (the `notes` field in the CKAN API):
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' \
     --column "Description" --pattern '^notes$' --max-length 50 > output.csv
@@ -152,7 +152,7 @@ ckanapi-exporter --url 'http://demo.ckan.org' \
 Let's add a column containing the formats of each datasets' resources:
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' \
     --column "Description" --pattern '^notes$' --max-length 50 \
@@ -202,7 +202,7 @@ CSV is repeated a lot because lots of the datasets have multiple CSV resources.
 You can add the `--deduplicate` option to the column to remove the duplication:
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' \
     --column "Description" --pattern '^notes$' --max-length 50 \
@@ -253,7 +253,7 @@ it's sometimes "Next Update" and sometimes "next update", "Next update day",
 these possible names and combine them into a single "Next Update" column:
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' \
+ckanapi-exporter --url 'https://demo.ckan.org' \
     --column "Title" --pattern '^title$' \
     --column "Rights" --pattern '^license_title$' \
     --column "Description" --pattern '^notes$' --max-length 50 \
@@ -319,7 +319,7 @@ Then tell ckanapi-exporter to read the column options from this file instead of
 giving them on the command line:
 
 ```bash
-ckanapi-exporter --url 'http://demo.ckan.org' --columns columns.json > output.csv
+ckanapi-exporter --url 'https://demo.ckan.org' --columns columns.json > output.csv
 ```
 
 For a working example `columns.json` file that you can use against demo.ckan.org,
@@ -339,7 +339,7 @@ client or plugin:
 
 ```python
 import ckanapi_exporter.exporter as exporter
-csv_string = exporter.export('http://demo.ckan.org', 'columns.json')
+csv_string = exporter.export('https://demo.ckan.org', 'columns.json')
 ```
 
 Returns a UTF8-encoded string.
